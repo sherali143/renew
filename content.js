@@ -8,6 +8,10 @@
   // https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM
   const shadowhost = document.createElement('div');
 
+  
+  // Using a global reference for the URL: https://www.nationalreview.com/  
+  const NATIONAL_REVIEW_URL = 'https://www.nationalreview.com';
+
   // URL Patterns for supported sites by our extension
   const URL = [
     /^https:\/\/www\.bbc\.com(\/(?!live\/|topics\/)[\w-]+){3}$/,                                                //  BBC                                    (working)
@@ -41,7 +45,7 @@
     console.log(lastUrl)
     const observer = new MutationObserver(() => {
     const currentUrl = window.location.href;
-    if (currentUrl !== lastUrl && (currentUrl.startsWith('https://www.aljazeera.com') || currentUrl.startsWith('https://www.dailywire.com') || currentUrl.startsWith('https://www.nationalreview.com'))) {
+    if (currentUrl !== lastUrl && (currentUrl.startsWith('https://www.aljazeera.com') || currentUrl.startsWith('https://www.dailywire.com') || currentUrl.startsWith(NATIONAL_REVIEW_URL))) {
       lastUrl = currentUrl;
       console.log(`URL changed to: ${currentUrl}`);
       location.reload();
@@ -745,7 +749,7 @@ async function extractArticle() {
     if (article) {
       return article;
     }
-  } else if (window.location.href.startsWith('https://www.nationalreview.com')) {
+  } else if (window.location.href.startsWith(NATIONAL_REVIEW_URL)) {                              // Using a global reference for the URL: https://www.nationalreview.com/
     article = await handleNationalReviewNews();
     if (article) {
         return article;
@@ -866,7 +870,7 @@ async function processNewsArticle() {
           '.article-body__content'
       );
 
-  } else if (window.location.href.startsWith('https://www.nationalreview.com/')) {
+  } else if (window.location.href.startsWith(NATIONAL_REVIEW_URL)) {                         // Using a global reference for the URL: https://www.nationalreview.com/
     articleContent = await handleNationalReviewNews();
     if (articleContent) 
         await neutralizeandReplaceContent(
@@ -1340,7 +1344,7 @@ async function neutralizeandReplaceContent(articleContent, selector) {
       shadowhost.shadowRoot.getElementById('neutralize-button-container').style.display = 'none';
       shadowhost.shadowRoot.getElementById('toggle-button-container').style.display = 'flex';
       
-    }, 2000)
+    }, 2000)67
   
     
 
