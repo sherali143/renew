@@ -12,6 +12,11 @@
   // Using a global reference for the URL: https://www.nationalreview.com/  
   const NATIONAL_REVIEW_URL = 'https://www.nationalreview.com';
 
+
+  // Moving .article-content.article-content--headless to a global constant
+  const NATIONAL_REVIEW_SELECTOR = '.article-content.article-content--headless';
+
+
   // URL Patterns for supported sites by our extension
   const URL = [
     /^https:\/\/www\.bbc\.com(\/(?!live\/|topics\/)[\w-]+){3}$/,                                                //  BBC                                    (working)
@@ -875,7 +880,7 @@ async function processNewsArticle() {
     if (articleContent) 
         await neutralizeandReplaceContent(
           articleContent,
-          '.article-content.article-content--headless'
+          NATIONAL_REVIEW_SELECTOR                                     // Using the global constant here
 
       );
     
@@ -1244,7 +1249,7 @@ async function handleNBCNews() {
 //19 NATIONAL REVIEW News
 async function handleNationalReviewNews() {
   //await new Promise(resolve => setTimeout(resolve, 1000));     // Adding a small delay before trying to extract the National Review article
-  let articleElement = document.querySelector('.article-content.article-content--headless');
+  let articleElement = document.querySelector(NATIONAL_REVIEW_SELECTOR );                        // Using the global constant here
   if (articleElement) {
       let clonedArticle = articleElement.cloneNode(true);
       
