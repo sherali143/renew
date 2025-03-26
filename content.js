@@ -8,6 +8,15 @@
   // https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM
   const shadowhost = document.createElement('div');
 
+  
+  // Using a global reference for the URL: https://www.nationalreview.com/  
+  const NATIONAL_REVIEW_URL = 'https://www.nationalreview.com';
+
+
+  // Moving .article-content.article-content--headless to a global constant
+  const NATIONAL_REVIEW_SELECTOR = '.article-content.article-content--headless';
+
+
   // URL Patterns for supported sites by our extension
   const URL = [
     /^https:\/\/www\.bbc\.com(\/(?!live\/|topics\/)[\w-]+){3}$/,                                                //  BBC                                    (working)
@@ -32,19 +41,20 @@
     /^https:\/\/tribune\.com\.pk\/story\/\d+\/[\w-]+$/,                                                         //  Tribune                                (working)
     /^https:\/\/www\.reuters\.com\/(?:[\w-]+\/)+[\w-]+(?:\/\d{4}-\d{2}-\d{2})?\/?$/,                            //  Reuters                                (working)
     /^https:\/\/www\.nbcnews\.com\/[\w-]+\/[\w-]+\/[\w-]+-[\w-]+-\w+-rcna\d+(\?.*)?$/,                          //  NBC News                               (working)
-  ]; 
+    /^https?:\/\/(?:www\.)?nationalreview\.com\/(?:[\w-]+\/)*[\w-]+\/?(?:\?.*)?$/,                              //  National Review                        (Added Extra Working Perfect)
+    ]; 
 
   
     // code below reloads the tab in order to run the script on single page applications
     let lastUrl = window.location.href;
     console.log(lastUrl)
     const observer = new MutationObserver(() => {
-      const currentUrl = window.location.href;
-      if (currentUrl !== lastUrl && (currentUrl.startsWith('https://www.aljazeera.com') || currentUrl.startsWith('https://www.dailywire.com'))) {
-        lastUrl = currentUrl;
-        console.log(`URL changed to: ${currentUrl}`); // Debug log
-        location.reload(); // Reload the page
-      }
+    const currentUrl = window.location.href;
+    if (currentUrl !== lastUrl && (currentUrl.startsWith('https://www.aljazeera.com') || currentUrl.startsWith('https://www.dailywire.com') || currentUrl.startsWith(NATIONAL_REVIEW_URL))) {
+      lastUrl = currentUrl;
+      console.log(`URL changed to: ${currentUrl}`);
+      location.reload();
+    }
     });
 
     // Observe changes to the DOM
@@ -744,6 +754,11 @@ async function extractArticle() {
     if (article) {
       return article;
     }
+  } else if (window.location.href.startsWith(NATIONAL_REVIEW_URL)) {                              // Using a global reference for the URL: https://www.nationalreview.com/
+    article = await handleNationalReviewNews();
+    if (article) {
+        return article;
+    }
   }
 }
 
@@ -854,14 +869,24 @@ async function processNewsArticle() {
       );
   } else if (window.location.href.startsWith('https://www.nbcnews.com/')) {
     articleContent = await handleNBCNews();
-    if (articleContent)
-      await neutralizeandReplaceContent(
-        articleContent,
-        '.article-body__content'
+    if (articleContent) 
+        await neutralizeandReplaceContent(
+          articleContent,
+          '.article-body__content'
       );
-  } else {
+
+  } else if (window.location.href.startsWith(NATIONAL_REVIEW_URL)) {                         // Using a global reference for the URL: https://www.nationalreview.com/
+    articleContent = await handleNationalReviewNews();
+    if (articleContent) 
+        await neutralizeandReplaceContent(
+          articleContent,
+          NATIONAL_REVIEW_SELECTOR                                     // Using the global constant here
+
+      );
+    
+} else {
     alert('No article found');
-  }
+}
 }
 
 // 18 News Websites Function for extracting article from the Page
@@ -1221,9 +1246,33 @@ async function handleNBCNews() {
 
 
 
+//19 NATIONAL REVIEW News
+async function handleNationalReviewNews() {
+  //await new Promise(resolve => setTimeout(resolve, 1000));     // Adding a small delay before trying to extract the National Review article
+  let articleElement = document.querySelector(NATIONAL_REVIEW_SELECTOR );                        // Using the global constant here
+  if (articleElement) {
+      let clonedArticle = articleElement.cloneNode(true);
+      
+      // Define unwanted selectors
+      let unwantedSelectors = [
+          '.cnx-ui-wrapper.cnx-bp-xl-lit',  // Compound class selector
+          //'.aside-content'                    // Class for aside content
+      ];
+
+      // Remove unwanted elements
+      unwantedSelectors.forEach((selector) => {
+          let unwantedElements = clonedArticle.querySelectorAll(selector);
+          unwantedElements.forEach((element) => element.remove());
+      });
+
+      return clonedArticle.innerHTML; // Return the cleaned HTML
+  } else {
+      return null; // No article found
+  }
+}
 
 
-// Neutralize the article  and Replace the Content through Streaming
+// Neutralize the article and replace the content through streaming
 async function neutralizeandReplaceContent(articleContent, selector) {
 
   // console.log('article content:', articleContent)
@@ -1274,6 +1323,7 @@ async function neutralizeandReplaceContent(articleContent, selector) {
       neutralizedContent += decoder.decode(value, { stream: true });
 
       // Update the article's content on the page as we receive each chunk
+      
       articleElement.innerHTML = neutralizedContent;
 
       // Automatically scroll the page to the current position of the article element
@@ -1299,7 +1349,7 @@ async function neutralizeandReplaceContent(articleContent, selector) {
       shadowhost.shadowRoot.getElementById('neutralize-button-container').style.display = 'none';
       shadowhost.shadowRoot.getElementById('toggle-button-container').style.display = 'flex';
       
-    }, 2000)
+    }, 2000)67
   
     
 
