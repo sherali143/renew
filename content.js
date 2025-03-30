@@ -1349,7 +1349,7 @@ async function neutralizeandReplaceContent(articleContent, selector) {
       shadowhost.shadowRoot.getElementById('neutralize-button-container').style.display = 'none';
       shadowhost.shadowRoot.getElementById('toggle-button-container').style.display = 'flex';
       
-    }, 2000)67
+    }, 2000);
   
     
 
