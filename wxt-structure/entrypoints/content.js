@@ -1,6 +1,6 @@
 export default defineContentScript({
   matches: ['<all_urls>'],
-  main() {
+  async main() {
 
     // creating a shadow host to render our extension UI separately from the rest of document/news site. This helps in resolving styling conflicts
     // https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM
