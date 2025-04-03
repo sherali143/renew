@@ -902,16 +902,16 @@ async function handleArticle(articleSelector, unwantedSelectors = []) {
 }
 // // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-// async function handleBBCNews() {
-//   const articleSelector = 'article';
-//   const unwantedSelectors = [
-//     '.sc-2b5e3b35-3',
-//     '.sc-c361b622-0',
-//     '.sc-c31cc200-1'
-//   ];
+async function handleBBCNews() {
+  const articleSelector = 'article';
+  const unwantedSelectors = [
+    '.sc-2b5e3b35-3',
+    '.sc-c361b622-0',
+    '.sc-c31cc200-1'
+  ];
 
-//   return await handleArticle(articleSelector, unwantedSelectors);
-// }
+  return await handleArticle(articleSelector, unwantedSelectors);
+}
 
 
 //1 BBC Fn Start
