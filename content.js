@@ -883,23 +883,23 @@ async function processNewsArticle() {
 
 
 // // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// async function handleArticle(articleSelector, unwantedSelectors = []) {
-//   let articleElement = document.querySelector(articleSelector);
+async function handleArticle(articleSelector, unwantedSelectors = []) {
+  let articleElement = document.querySelector(articleSelector);
   
-//   if (!articleElement) {
-//     console.error(`No article found for selector: ${articleSelector}`);
-//     return null;
-//   }
+  if (!articleElement) {
+    console.error(`No article found for selector: ${articleSelector}`);
+    return null;
+  }
 
-//   let clonedArticle = articleElement.cloneNode(true);
+  let clonedArticle = articleElement.cloneNode(true);
 
-//   // Remove unwanted elements
-//   unwantedSelectors.forEach((selector) => {
-//     clonedArticle.querySelectorAll(selector).forEach((element) => element.remove());
-//   });
+  // Remove unwanted elements
+  unwantedSelectors.forEach((selector) => {
+    clonedArticle.querySelectorAll(selector).forEach((element) => element.remove());
+  });
 
-//   return clonedArticle.innerHTML;
-// }
+  return clonedArticle.innerHTML;
+}
 // // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 // async function handleBBCNews() {
