@@ -1,13 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Default Popup Title</title>
-    <meta name="manifest.type" content="browser_action" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="./main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReNews</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 12px;
+      width: 500px;
+      background-color: #f3f7fb;
+      color: #444;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    /* Header Styling */
+    h1 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      color: #3b82f6;
+      text-align: center;
+    }
+
+    /* Paragraph Styling */
+    p {
+      font-size: 16px;
+      margin-bottom: 12px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    /* List Styling */
+    ul {
+      padding-left: 20px;
+      font-size: 15px;
+      color: #555;
+      list-style-type: none;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    li::before {
+      content: "•";
+      color: #3b82f6;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    /* Features Styling */
+    .features {
+      background-color: #f0f4f8;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+
+    /* Feature List Styling */
+    .features h2 {
+      font-size: 18px;
+      color: #3b82f6;
+      margin: 0 0 8px;
+    }
+    
+    .features ul {
+      padding-left: 0;
+      list-style-type: none;
+    }
+
+    .features li {
+      font-size: 14.5px;
+      padding-left: 20px;
+      color: #444;
+    }
+
+    .features li strong {
+      color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ReNews</h1>
+    <p>ReNews is here to help you analyze and balance political bias in news articles. Here’s how it works:</p>
+    <ul>
+      <li>Detects when you visit a news article automatically.</li>
+      <li>Displays a hover panel on the right side of your screen.</li>
+      <li>Extracts the main content for analysis.</li>
+      <li>Analyzes bias level and political leaning on our server.</li>
+      <li>Shows the analysis results, including bias level and leaning.</li>
+      <li>If bias is found, provides an option to <strong>neutralize</strong> content for a balanced view.</li>
+    </ul>
+    
+    <div class="features">
+      <h2>Features</h2>
+      <ul>
+        <li><strong>Bias Meter</strong>: Indicates the level of detected bias.</li>
+        <li><strong>Neutralization Option</strong>: Click to view a neutralized version of biased content.</li>
+        <li><strong>Adjustable Panel</strong>: Toggle the panel to minimize it and bring it back into view</li>
+      </ul>
+    </div>
+    
+    <p style="text-align: center; margin-top: 16px;">Thank you for using ReNews!</p>
+  </div>
+</body>
 </html>
