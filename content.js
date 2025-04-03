@@ -914,27 +914,27 @@ async function handleBBCNews() {
 }
 
 
-//1 BBC Fn Start
-async function handleBBCNews() {
-  let articleElement = document.querySelector('article');
-  if (articleElement) {
-    // articleElement.scrollIntoView(true);
-    let clonedArticle = articleElement.cloneNode(true);
-    let unwantedSelectors = [
-      '.sc-2b5e3b35-3',
-      '.sc-c361b622-0',
-      '.sc-c31cc200-1',
-    ];
-    unwantedSelectors.forEach((selector) => {
-      let unwantedElements = clonedArticle.querySelectorAll(selector);
-      unwantedElements.forEach((element) => element.remove());
-    });
-    return clonedArticle.innerHTML;
-  } else {
-    // alert('No article found');
-    return null;
-  }
-}
+// //1 BBC Fn Start
+// async function handleBBCNews() {
+//   let articleElement = document.querySelector('article');
+//   if (articleElement) {
+//     // articleElement.scrollIntoView(true);
+//     let clonedArticle = articleElement.cloneNode(true);
+//     let unwantedSelectors = [
+//       '.sc-2b5e3b35-3',
+//       '.sc-c361b622-0',
+//       '.sc-c31cc200-1',
+//     ];
+//     unwantedSelectors.forEach((selector) => {
+//       let unwantedElements = clonedArticle.querySelectorAll(selector);
+//       unwantedElements.forEach((element) => element.remove());
+//     });
+//     return clonedArticle.innerHTML;
+//   } else {
+//     // alert('No article found');
+//     return null;
+//   }
+// }
 // BBC Fn End
 
 
